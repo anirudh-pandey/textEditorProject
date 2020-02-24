@@ -9,7 +9,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="New" />
+              <MenuItem mnemonicParsing="false" onAction="#handleNewBtnAction" text="New" />
                   <MenuItem mnemonicParsing="false" onAction="#handleNewWindowBtnAction" text="New Window" />
                   <MenuItem mnemonicParsing="false" onAction="#handleOpenBtnAction" text="Open..." />
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveBtnAction" text="Save" />

@@ -6,22 +6,31 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.mozilla.universalchardet.UniversalDetector;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Controller {
     @FXML private TextArea textArea;
 
+
     protected Stage primaryStage;
     protected String fileName = "untitled";
     protected File currentFile;
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     protected void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -51,10 +60,8 @@ public class Controller {
     protected void handleSaveBtnAction() {
         if(getCurrentFile() != null) {
             saveFile(getCurrentFile());
-            System.out.println("SAving.....");
         } else {
             handleSaveAsBtnAction();
-            System.out.println("SAve Asing.....");
         }
     }
 
@@ -67,35 +74,27 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
         fileChooser.setInitialFileName("*.txt");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("TXT", "*.txt"),
-                new FileChooser.ExtensionFilter("HTML", "*.html"),
-                new FileChooser.ExtensionFilter("CSS", "*.css"),
-                new FileChooser.ExtensionFilter("Java", "*.java"),
-                new FileChooser.ExtensionFilter("C", "*.c"),
-                new FileChooser.ExtensionFilter("Py", "*.py"),
-                new FileChooser.ExtensionFilter("Js", "*.js"),
-                new FileChooser.ExtensionFilter("Json", "*.json"),
-                new FileChooser.ExtensionFilter("XML", "*.xml")
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("TXT", "*.txt")
         );
-//        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Based Files", "*.txt"
-//                , "*.html", "*.css", "*.js", "*.java", "*.py", "*.c"));
         File file = fileChooser.showSaveDialog(primaryStage);
         if(file != null) {
             setFileName(file.getName());
             setCurrentFile(file);
             saveFile(file);
+            setTextEditorContents(file);
         }
     }
 
     // method to write contents of textArea into the file.
     private void saveFile(File file) {
         if(file != null) {
-            Charset charset = Charset.forName("UTF-8");
-
-            try(BufferedWriter writer = Files.newBufferedWriter(file.toPath(), charset)) {
+            try {
+                System.out.println("||||--- "+file.getAbsolutePath()+" ---||||");
+                BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.getAbsolutePath()));
                 writer.write(textArea.getText());
-                primaryStage.setTitle(getFileName() + " - World's Greatest IDE");
+                primaryStage.setTitle(getCurrentFile().getName() + " - World's Greatest IDE");
+                writer.close();
             } catch(IOException e) {
                 e.printStackTrace();
             }
@@ -103,8 +102,14 @@ public class Controller {
     }
 
     @FXML
-    protected void handleNewBtnAction(ActionEvent actionEvent) {
-
+    protected void handleNewBtnAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        Parent root = loader.load();
+        setFileName("untitled");
+        setCurrentFile(null);
+        this.primaryStage.setTitle(getFileName() + " - World's Greatest IDE");
+        this.primaryStage.setScene(new Scene(root, 500, 375));
+        this.primaryStage.show();
     }
    
     @FXML
@@ -125,53 +130,38 @@ public class Controller {
     }
 
     @FXML
-    protected void handleOpenBtnAction(ActionEvent actionEvent) throws IOException {
+    protected void handleOpenBtnAction(ActionEvent actionEvent) {
         // code to open "file selector dialog"
         if((!isFileSaved() && notSavedDialog()) || isFileSaved()) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select File");
-            fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("TXT", "*.txt"),
-                    new FileChooser.ExtensionFilter("HTML", "*.html"),
-                    new FileChooser.ExtensionFilter("CSS", "*.css"),
-                    new FileChooser.ExtensionFilter("Java", "*.java"),
-                    new FileChooser.ExtensionFilter("C", "*.c"),
-                    new FileChooser.ExtensionFilter("Py", "*.py"),
-                    new FileChooser.ExtensionFilter("Js", "*.js"),
-                    new FileChooser.ExtensionFilter("Json", "*.json"),
-                    new FileChooser.ExtensionFilter("XML", "*.xml")
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("TXT", "*.txt")
             );
             File file = fileChooser.showOpenDialog(primaryStage);
 
-            if(file != null) {
-                setFileName(file.getName());
-                setCurrentFile(file);
-                System.out.println("====================" + file.toPath());
-                String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
-                if(content != null) {
-                    textArea.setText(content);
-                    primaryStage.setTitle(getFileName() + " - World's Greatest IDE");
-                }
-//                Charset charset = Charset.forName("US-ASCII");
-//                BufferedReader reader = Files.newBufferedReader(file.toPath(), charset);
-//                String line = null;
-//                while((line = reader.readLine()) != null) {
-//                    System.out.println(line);
-//                }
-            }
-
-//            if(file != null) {
-//                // code to display the contents of file.
-//                setFileName(file.getName());
-//                setCurrentFile(file);
-//                String content = Files.readString(Paths.get(file.getAbsolutePath()));
-//                if(content != null) {
-//                    textArea.setText(content);
-//                    primaryStage.setTitle(getFileName() + " - World's Greatest IDE");
-//                }
-//            }
+            setTextEditorContents(file);
         }
 
+    }
+
+    protected void setTextEditorContents(File file) {
+        if(file != null) {
+            setFileName(file.getName());
+            setCurrentFile(file);
+            String content = null;
+            try {
+                content = Files.readString(Paths.get(file.getAbsolutePath()));
+                if(content != null) {
+                    textArea.setText(content);
+                    System.out.println("---||---   "+getFileCharset(getCurrentFile())+"   ---||---");
+                    primaryStage.setTitle(getCurrentFile().getName() + " - World's Greatest IDE");
+                }
+            } catch (IOException e) {
+                System.out.println("SET TEXTAREA, FILE");
+                e.printStackTrace();
+            }
+        }
     }
 
     protected boolean notSavedDialog() {
@@ -194,27 +184,47 @@ public class Controller {
         return false;
     }
 
+    // different language text files not supported
     protected boolean isFileSaved() {
         try {
             if(getCurrentFile() == null && !textArea.getText().isEmpty()) {
-                System.out.println("1");
               return false;
             } else if(getCurrentFile() != null) {
+                System.out.println("------   "+getFileCharset(getCurrentFile())+"   ------");
 //                String content = Files.readString(Paths.get(getCurrentFile().getAbsolutePath()));
-                String content = Files.readString(getCurrentFile().toPath(), StandardCharsets.UTF_8);
+                String content = Files.readString(getCurrentFile().toPath());
 //                System.out.println(content);
                 if(content != null) {
                     System.out.println(content.equals(textArea.getText()) + "--" + getCurrentFile().getAbsolutePath());
+                    return content.equals(textArea.getText());
                 }
-                return content.equals(textArea.getText());
 //                textArea.setText(textArea.getText() + "Dont need to save");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("3");
         return true;
+    }
 
+
+    public String getFileCharset(File file) throws IOException {
+        byte[] buf = new byte[4096];
+        java.io.FileInputStream fis = new java.io.FileInputStream(file.getAbsolutePath());
+        UniversalDetector detector = new UniversalDetector(null);
+
+        int nread;
+        while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+            detector.handleData(buf, 0, nread);
+        }
+        detector.dataEnd();
+        String encoding = detector.getDetectedCharset();
+        if (encoding != null) {
+            System.out.println("Detected encoding = " + encoding);
+        } else {
+            System.out.println("No encoding detected.");
+        }
+        detector.reset();
+        return encoding;
     }
 
 }
