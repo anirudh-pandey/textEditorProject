@@ -3,5 +3,5 @@ module HelloWorldFX3 {
     requires javafx.controls;
     requires juniversalchardet;
 
-    opens sample;
+    opens editor;
 }

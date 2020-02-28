@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editor.Controller">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="true" text="_File">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleNewBtnAction" text="New" />
                   <MenuItem mnemonicParsing="false" onAction="#handleNewWindowBtnAction" text="New Window" />
@@ -18,7 +18,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleExitBtnAction" text="Exit" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Edit">
+            <Menu mnemonicParsing="true" text="_Edit">
                <items>
                   <MenuItem mnemonicParsing="false" text="Undo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -36,12 +36,12 @@
                   <MenuItem mnemonicParsing="false" text="Select All" />
                </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Settings">
+          <Menu mnemonicParsing="true" text="_Settings">
             <items>
               <MenuItem mnemonicParsing="false" text="Work In Progress..." />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+            <Menu mnemonicParsing="true" text="_Help">
                <items>
                   <MenuItem mnemonicParsing="false" text="About" />
                </items>
