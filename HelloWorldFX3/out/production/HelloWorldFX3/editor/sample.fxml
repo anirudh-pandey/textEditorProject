@@ -18,14 +18,14 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleExitBtnAction" text="Exit" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="true" text="_Edit">
+            <Menu fx:id="editMenuElem" mnemonicParsing="true" onShown="#handleEditTabAction" text="_Edit">
                <items>
                   <MenuItem mnemonicParsing="false" text="Undo" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Cut" />
-                  <MenuItem mnemonicParsing="false" text="Copy" />
-                  <MenuItem mnemonicParsing="false" text="Paste" />
-                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" disable="true" onAction="#handleCutBtnAction" text="Cut" />
+                  <MenuItem mnemonicParsing="false" disable="true" onAction="#handleCopyBtnAction" text="Copy" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePasteBtnAction" text="Paste" />
+                  <MenuItem mnemonicParsing="false" disable="true" onAction="#handleDelBtnAction" text="Delete" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" text="Find..." />
                   <MenuItem mnemonicParsing="false" text="Find Next" />
@@ -33,7 +33,7 @@
                   <MenuItem mnemonicParsing="false" text="Replace..." />
                   <MenuItem mnemonicParsing="false" text="Go To..." />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" text="Select All" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSelectAllBtnAction" text="Select All" />
                </items>
             </Menu>
           <Menu mnemonicParsing="true" text="_Settings">

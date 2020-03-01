@@ -20,6 +20,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 500, 375));
         primaryStage.show();
 
+//        TextArea textArea = controller.getTextArea().getScene().getWindow();
+
     }
 
     public static void main(String[] args) {
