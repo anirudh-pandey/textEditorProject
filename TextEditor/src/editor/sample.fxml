@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="editor.Controller">
+   <top>
+       <MenuBar BorderPane.alignment="CENTER">
+           <Menu text="_File">
+               <items>
+                   <MenuItem onAction="#handleNewAction" text="_New">
+                       <accelerator>
+                           <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                       </accelerator>
+                   </MenuItem>
+                   <MenuItem onAction="#handleNewWindowAction" text="New _Window      ">
+                       <accelerator>
+                           <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                       </accelerator>
+                   </MenuItem>
+                   <MenuItem onAction="#handleOpenAction" text="_Open...">
+                       <accelerator>
+                           <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                       </accelerator>
+                   </MenuItem>
+                   <MenuItem onAction="#handleSaveAction" text="_Save">
+                       <accelerator>
+                           <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                       </accelerator>
+                   </MenuItem>
+                   <MenuItem onAction="#handleSaveAsAction" text="Save _As...">
+                       <accelerator>
+                           <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP"/>
+                       </accelerator>
+                   </MenuItem>
+                   <SeparatorMenuItem mnemonicParsing="false"/>
+                   <MenuItem onAction="#handleExitAction" text="E_xit"/>
+               </items>
+           </Menu>
+
+
+           <Menu fx:id="editMenuElem" onShown="#handleEditTabAction" text="_Edit">
+               <MenuItem onAction="#handleUndoAction" fx:id="undoMenuItem" text="_Undo">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <SeparatorMenuItem mnemonicParsing="false"/>
+               <MenuItem disable="true" onAction="#handleCutAction" fx:id="cutMenuItem"
+                         text="Cu_t">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem disable="true" onAction="#handleCopyAction" fx:id="copyMenuItem"
+                         text="_Copy">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem onAction="#handlePasteAction" fx:id="pasteMenuItem" text="_Paste">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem disable="true" onAction="#handleDelAction" fx:id="deleteMenuItem"
+                         text="De_lete">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+
+               <SeparatorMenuItem mnemonicParsing="false"/>
+
+               <MenuItem disable="true" onAction="#handleFindAction" fx:id="findMenuItem"
+                         text="_Find...">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem disable="true" onAction="#handleFindNextAction" fx:id="findNextMenuItem" text="Find _Next">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="F3" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem disable="true" onAction="#handleFindPrevAction"
+                         fx:id="findPrevMenuItem" text="Find Pre_vious      ">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="F3" control="UP" meta="UP" shift="DOWN" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem onAction="#handleReplaceAction" fx:id="replaceMenuItem"
+                         text="_Replace">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem disable="true" onAction="#handleGoToAction" fx:id="gotoMenuItem"
+                         text="_Go To...">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="G" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <SeparatorMenuItem mnemonicParsing="false"/>
+               <MenuItem onAction="#handleSelectAllAction" text="Select _All">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+               <MenuItem onAction="#handleTimeAction" text="Time/_Date">
+                   <accelerator>
+                       <KeyCodeCombination alt="UP" code="F5" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                   </accelerator>
+               </MenuItem>
+           </Menu>
+
+
+           <Menu text="F_ormat">
+               <items>
+                   <MenuItem onAction="#handleWrapTextAction" text="_Wrap Text">
+                       <graphic>
+                           <CheckBox mnemonicParsing="false" fx:id="wrapTextBox"/>
+                       </graphic>
+                   </MenuItem>
+                   <MenuItem onAction="#handleFontAction" text="_Font"/>
+               </items>
+           </Menu>
+
+           <Menu text="_Help">
+              <items>
+                  <MenuItem onAction="#handleAboutAction" mnemonicParsing="false" text="About"/>
+              </items>
+           </Menu>
+
+       </MenuBar>
+   </top>
+   <center>
+       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <TextArea fx:id="textArea" onKeyTyped="#handleEditTabAction" layoutX="167.0" layoutY="36.0"
+                     prefHeight="375.0" prefWidth="600.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="3.0"
+                     AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0"/>
+       </AnchorPane>
+   </center>
+</BorderPane>
