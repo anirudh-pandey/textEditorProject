@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        final String appName = "Notebook1";
+        final String appName = "Notebook";
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../editor/sample.fxml"));
         Parent root = loader.load();
         FileMenu fileMenu = new FileMenu();
