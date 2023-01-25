@@ -47,7 +47,7 @@ public class FileMenu {
         setCurrentFile(null);
         Stage currentStage = (Stage) textArea.getScene().getWindow();
         currentStage.setTitle(this.getFileName() + " - " + this.appName);
-        currentStage.getIcons().add(new Image(getClass().getResourceAsStream("../notebookIcon.png")));
+        currentStage.getIcons().add(new Image(getClass().getResourceAsStream("/notebookIcon.png")));
         textArea.setText("");
     }
 
@@ -56,7 +56,7 @@ public class FileMenu {
         Parent root = loader.load();
         Stage secondaryStage = new Stage();
         secondaryStage.setTitle(this.getFileName() + " - " + this.appName);
-        secondaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../notebookIcon.png")));
+        secondaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/notebookIcon.png")));
         secondaryStage.setScene(new Scene(root, 600, 450));
         secondaryStage.show();
     }
