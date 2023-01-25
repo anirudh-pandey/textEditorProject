@@ -14,12 +14,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         final String appName = "Notebook";
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../editor/sample.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/editor/sample.fxml"));
         Parent root = loader.load();
         FileMenu fileMenu = new FileMenu();
         loader.getController();
 
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../notebookIcon.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/notebookIcon.png")));
         primaryStage.setTitle(fileMenu.getFileName() + " - " + appName);
         primaryStage.setScene(new Scene(root, 600, 450));
         primaryStage.show();
